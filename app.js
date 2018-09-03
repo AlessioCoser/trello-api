@@ -11,6 +11,10 @@ const cardsFromBoard = (id) => {
   return `https://api.trello.com/1/boards/${id}/cards?key=${apiKey}&token=${apiToken}`
 }
 
+const actionsFromCard = (id) => {
+  return `https://api.trello.com/1/card/${id}/actions?key=${apiKey}&token=${apiToken}`
+}
+
 const toJson = (response) => {
   return JSON.parse(response.body)
 }
