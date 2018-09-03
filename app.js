@@ -3,6 +3,19 @@ const apiToken = process.env.API_TOKEN
 const apiKey = process.env.API_KEY
 const boardId = process.env.BOARD_ID
 
+const get = (uri) => {
+  return new Promise((resolve, reject) => {
+    return request(uri, (error, response, body) => {
+      if (error) { reject(error) }
+      resolve(toJson(response))
+    })
+  })
+}
+
+const toJson = (response) => {
+  return JSON.parse(response.body)
+}
+
 const listsFromBoard = (id) => {
   return `https://api.trello.com/1/boards/${id}/lists?key=${apiKey}&token=${apiToken}`
 }
@@ -11,12 +24,8 @@ const cardsFromBoard = (id) => {
   return `https://api.trello.com/1/boards/${id}/cards?key=${apiKey}&token=${apiToken}`
 }
 
-const actionsFromCard = (id) => {
-  return `https://api.trello.com/1/card/${id}/actions?key=${apiKey}&token=${apiToken}`
-}
-
-const toJson = (response) => {
-  return JSON.parse(response.body)
+const cardActions = (id) => {
+  return `https://api.trello.com/1/cards/${id}/actions?filter=updateCard:idList&key=${apiKey}&token=${apiToken}`
 }
 
 const filterByName = (name) => {
@@ -25,28 +34,24 @@ const filterByName = (name) => {
   }
 }
 
-const get = (uri) => {
-  return new Promise((resolve, reject) => {
-    return request(uri, (error, response, body) => {
-      if (error) { reject(error) }
-      resolve(response)
-    })
+const cardActionsRequestsFrom = (card) => {
+  return get(cardActions(card.id))
+  .then((actions) => {
+    return {card, actions}
   })
 }
 
-get(cardsFromBoard(boardId))
-.then(toJson)
-.then(filterByName('Board Unica'))
-.then((cards) => {
-  console.log(cards)
-})
+const toCardActions = (cards) => {
+  return Promise.all(cards.map(cardActionsRequestsFrom))
+}
 
-// get(listsFromBoard(boardId))
-// .then(toJson)
-// .then(filterByName('DONE'))
-// .then(list => {
-//   console.log(list)
-// })
-// .catch((error) => {
-//   console.log(error)
-// })
+get(cardsFromBoard(boardId))
+.then(toCardActions)
+.then((cardsActions) => {
+  return cardsActions.forEach((cardActions) => {
+    console.log('--------------------------------------\nCard: ', cardActions.card.name)
+    cardActions.actions.forEach((action) => {
+      console.log(action.date, ':', action.data.listBefore.name, '-->', action.data.listAfter.name)
+    })
+  })
+})
