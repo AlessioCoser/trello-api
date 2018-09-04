@@ -4,7 +4,7 @@ const {cardsFromBoard, actionsFromCard} = require('./urls')
 const {cycleTime} = require('./rules/cycleTime')
 const {listsMovesActions} = require('./rules/listsMovesActions')
 
-const boardId = process.env.BOARD_ID
+const boardId = process.env.npm_package_config_BOARD_ID
 
 const cardActionsRequestsFrom = (card) => {
   return fetchJson(actionsFromCard(card.id))
