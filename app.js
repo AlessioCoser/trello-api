@@ -1,21 +1,8 @@
-const request = require('request')
+const {fetchJson} = require('./fetch')
 
 const apiToken = process.env.API_TOKEN
 const apiKey = process.env.API_KEY
 const boardId = process.env.BOARD_ID
-
-const get = (uri) => {
-  return new Promise((resolve, reject) => {
-    return request(uri, (error, response, body) => {
-      if (error) { reject(error) }
-      resolve(toJson(response))
-    })
-  })
-}
-
-const toJson = (response) => {
-  return JSON.parse(response.body)
-}
 
 const listsFromBoard = (id) => {
   return `https://api.trello.com/1/boards/${id}/lists?key=${apiKey}&token=${apiToken}`
@@ -36,7 +23,7 @@ const filterByName = (name) => {
 }
 
 const cardActionsRequestsFrom = (card) => {
-  return get(cardActions(card.id))
+  return fetchJson(cardActions(card.id))
   .then((actions) => {
     return {card, actions}
   })
@@ -46,7 +33,7 @@ const toCardActions = (cards) => {
   return Promise.all(cards.map(cardActionsRequestsFrom))
 }
 
-get(cardsFromBoard(boardId))
+fetchJson(cardsFromBoard(boardId))
 .then(toCardActions)
 .then((cardsActions) => {
   return cardsActions.forEach((cardActions) => {
