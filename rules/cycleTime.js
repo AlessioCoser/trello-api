@@ -6,6 +6,13 @@ const actionsThatMoves = (cardActions, from, to) => {
 
 const average = (arr) => arr.reduce((p, c) => p + c, 0) / arr.length
 
+const differenceFrom = (startCycle, endCycle) => {
+  let startDate = new Date(startCycle.date)
+  let endDate = new Date(endCycle.date)
+
+  return Math.round((endDate.getTime() - startDate.getTime()) / 1000)
+}
+
 exports.cycleTime = (cardsActions) => {
   let cycleTimesInSeconds = cardsActions.reduce((acc, cardActions) => {
     let startCycle = (actionsThatMoves(cardActions, 'TODO', 'DOING') || []).shift()
@@ -13,12 +20,7 @@ exports.cycleTime = (cardsActions) => {
 
     if (!startCycle || !endCycle) return acc
 
-    let startDate = new Date(startCycle.date)
-    let endDate = new Date(endCycle.date)
-
-    let differenceInseconds = Math.round((endDate.getTime() - startDate.getTime()) / 1000)
-
-    acc.push(differenceInseconds)
+    acc.push(differenceFrom(startCycle, endCycle))
     return acc
   }, [])
 

@@ -1,11 +1,13 @@
+const actionToString = (action) => action.date + ': ' + action.data.listBefore.name + ' --> ' + action.data.listAfter.name
+const cardTitle = (card) => '--------------------------------------\nCard: ' + card.name
+
+const toText = (cardActions) => {
+  let head = cardTitle(cardActions.card)
+  let actions = cardActions.actions.map(actionToString)
+
+  return [head, ...actions].join('\n')
+}
+
 exports.listsMovesActions = (cardsActions) => {
-  return cardsActions.map((cardActions) => {
-    let head = '--------------------------------------\nCard: ' + cardActions.card.name
-
-    let actions = cardActions.actions.map((action) => {
-      return action.date + ': ' + action.data.listBefore.name + ' --> ' + action.data.listAfter.name
-    })
-
-    return [head, ...actions].join('\n')
-  }).join('\n')
+  return cardsActions.map(toText).join('\n')
 }
