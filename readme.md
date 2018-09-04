@@ -9,5 +9,5 @@
 
 ### Run application
 ```sh
-env $(cat .env | xargs) node app.js
+npm start
 ```
