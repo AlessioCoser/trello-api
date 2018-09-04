@@ -1,13 +1,10 @@
-const {fetchJson} = require('./fetch')
-const {cardsFromBoard, actionsFromCard} = require('./urls')
-
-const {cycleTime} = require('./rules/cycleTime')
-const {listsMovesActions} = require('./rules/listsMovesActions')
-
-const boardId = process.env.npm_package_config_BOARD_ID
+const {cardsUrl, actionsFromCardUrl} = require('./lib/utils')
+const {fetchJson} = require('./lib/fetch')
+const {cycleTime} = require('./lib/rules/cycleTime')
+const {listsMovesActions} = require('./lib/rules/listsMovesActions')
 
 const cardActionsRequestsFrom = (card) => {
-  return fetchJson(actionsFromCard(card.id))
+  return fetchJson(actionsFromCardUrl(card.id))
   .then((actions) => {
     return {card, actions}
   })
@@ -24,7 +21,7 @@ const print = (fn) => {
   }
 }
 
-fetchJson(cardsFromBoard(boardId))
+fetchJson(cardsUrl)
 .then(toCardActions)
 .then(print(cycleTime))
 .then(print(listsMovesActions))
