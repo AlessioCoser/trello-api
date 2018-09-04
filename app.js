@@ -1,6 +1,9 @@
 const {fetchJson} = require('./fetch')
 const {cardsFromBoard, actionsFromCard} = require('./urls')
 
+const {cycleTime} = require('./rules/cycleTime')
+const {listsMovesActions} = require('./rules/listsMovesActions')
+
 const boardId = process.env.BOARD_ID
 
 const cardActionsRequestsFrom = (card) => {
@@ -16,29 +19,16 @@ const toCardActions = (cards) => {
 
 const print = (fn) => {
   return (input) => {
-    let toPrint = fn(input)
-    console.log(toPrint)
+    console.log(fn(input))
     return input
   }
 }
 
-const listsMoveActionsText = (cardsActions) => {
-  return cardsActions.map((cardActions) => {
-    let head = '--------------------------------------\nCard: ' + cardActions.card.name
-
-    let actions = cardActions.actions.map((action) => {
-      return action.date + ': ' + action.data.listBefore.name + ' --> ' + action.data.listAfter.name
-    })
-
-    return [head, ...actions].join('\n')
-  }).join('\n')
-}
-
 fetchJson(cardsFromBoard(boardId))
 .then(toCardActions)
-.then(print(listsMoveActionsText))
+.then(print(cycleTime))
+.then(print(listsMovesActions))
 .then((cardsActions) => {
-  // console.log('--------------------------------------')
-  // console.log(cardsActions)
+  console.log('\n~ END ~\n')
 })
 .catch(err => console.log(err))
