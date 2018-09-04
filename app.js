@@ -18,7 +18,7 @@ fetchJson(cardsFromBoard(boardId))
 .then(toCardActions)
 .then((cardsActions) => {
   return cardsActions.forEach((cardActions) => {
-    console.log('--------------------------------------\nCard: ', cardActions.card.name)
+    console.log('--------------------------------------\nCard:', cardActions.card.name)
     cardActions.actions.forEach((action) => {
       console.log(action.date, ':', action.data.listBefore.name, '-->', action.data.listAfter.name)
     })
