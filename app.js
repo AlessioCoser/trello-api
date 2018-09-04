@@ -1,5 +1,5 @@
-const {cardsFromBoard, actionsFromCard} = require('./urls')
 const {fetchJson} = require('./fetch')
+const {cardsFromBoard, actionsFromCard} = require('./urls')
 
 const boardId = process.env.BOARD_ID
 
@@ -24,3 +24,4 @@ fetchJson(cardsFromBoard(boardId))
     })
   })
 })
+.catch(err => console.log(err))
