@@ -1,9 +1,9 @@
 const {equal, notEqual} = require('assert')
-const {TrelloApi, TrelloConfig} = require('../../lib/Trello')
+const {TrelloApi} = require('../../lib/trello/api')
 
 test('TrelloApi', () => {
   test('#myBoards list all boards with id and name', (done) => {
-    let trelloApi = TrelloApi(TrelloConfig())
+    let trelloApi = TrelloApi()
 
     trelloApi.myBoards()
     .then((boards) => {

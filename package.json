@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "test": "m.test test/unit",
-    "test:acceptance": "m.test test/acceptance"
+    "test:smoke": "m.test test/smoke"
   },
   "keywords": [],
   "author": "",
