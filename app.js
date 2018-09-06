@@ -1,6 +1,6 @@
 const {cardsUrl, actionsFromCardUrl} = require('./lib/utils')
 const {fetchJson} = require('./lib/fetch')
-const {cycleTime} = require('./lib/rules/cycleTime')
+const {closedByWeeks} = require('./lib/rules/closedByWeeks')
 const {listsMovesActions} = require('./lib/rules/listsMovesActions')
 
 const cardActionsRequestsFrom = (card) => {
@@ -23,7 +23,7 @@ const print = (fn) => {
 
 fetchJson(cardsUrl)
 .then(toCardActions)
-.then(print(cycleTime))
+.then(print(closedByWeeks))
 .then(print(listsMovesActions))
 .then((cardsActions) => {
   console.log('\n~ END ~\n')
