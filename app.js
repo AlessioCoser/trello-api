@@ -3,8 +3,8 @@ const {fetchJson} = require('./lib/fetch')
 const {closedByWeeks} = require('./lib/rules/closedByWeeks')
 const {listsMovesActions} = require('./lib/rules/listsMovesActions')
 
-const cardActionsRequestsFrom = (card, since) => {
-  return fetchJson(actionsFromCardUrl(card.id, since))
+const cardActionsRequestsFrom = (card) => {
+  return fetchJson(actionsFromCardUrl(card.id))
   .then((actions) => {
     return {card, actions}
   })
