@@ -36,6 +36,12 @@ const countArrayItems = (fn) => {
   }
 }
 
+// fetchJson(boardsUrl)
+// .then((boards) => {
+//   console.log(boards.map((board) => board.id + ': ' + board.name))
+// })
+// .catch(err => console.log(err))
+
 fetchJson(cardsUrl)
 .then(toCardActions)
 .then(print('List Moves Actions', listsMovesActions))

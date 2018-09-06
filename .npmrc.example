@@ -1,5 +1,6 @@
 trello-api:API_KEY=your_trello_api_key
 trello-api:API_TOKEN=your_trello_api_token
+trello-api:USERNAME=your_trello_username
 
 trello-api:BOARD_ID=your_trello_board_id
 trello-api:DOING_LIST=DOING
