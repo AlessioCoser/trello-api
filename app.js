@@ -1,7 +1,7 @@
-const { api } = require('./lib/trello')
-const {TrelloConfig} = require('./lib/trello/config')
+const { cardsFor } = require('./lib/trello')
+const { configuration } = require('./lib/trello/configuration')
 
-const boardId = TrelloConfig().boardId
+const boardId = configuration().boardId
 
-api.cardsOf(boardId)
+cardsFor(boardId)
 .then((cards) => console.log(cards))
