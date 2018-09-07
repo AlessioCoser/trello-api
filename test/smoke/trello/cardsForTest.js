@@ -1,6 +1,6 @@
 const { equal, notEqual } = require('assert')
 const { cardsFor } = require('../../../lib/trello')
-const { config } = require('../../../lib/trello')
+const { configuration: config } = require('../../../lib/trello/configuration')
 
 test('trello', () => {
   test('#cardsFor', () => {
