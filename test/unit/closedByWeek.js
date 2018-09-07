@@ -20,7 +20,7 @@ test('ClosedByWeek', () => {
     .then(done).catch(done)
   })
 
-  test('rejects with an error when call to trello is broken', (done) => {
+  test('rejects with an error when cannot reach api', (done) => {
     let fakeCardsFor = () => Promise.reject(new Error('404 not found'))
     let closedByWeek = ClosedByWeek(fakeCardsFor)
 
