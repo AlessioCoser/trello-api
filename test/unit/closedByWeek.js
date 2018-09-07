@@ -1,9 +1,9 @@
-const {deepEqual} = require('assert')
+const { deepEqual } = require('assert')
 
 test('ClosedByWeek', () => {
   test('returns empty array if no cards present', (done) => {
-    let trelloFakeApi = {cardsOf: () => Promise.resolve([])}
-    let closedByWeek = ClosedByWeek(trelloFakeApi)
+    let fakeCardsFor = () => Promise.resolve([])
+    let closedByWeek = ClosedByWeek(fakeCardsFor)
 
     closedByWeek.get('boardId')
     .then((cards) => {
@@ -14,8 +14,8 @@ test('ClosedByWeek', () => {
   })
 })
 
-const ClosedByWeek = (trelloApi) => {
+const ClosedByWeek = (cardsFor) => {
   return {
-    get: (boardId) => trelloApi.cardsOf(boardId)
+    get: (boardId) => cardsFor(boardId)
   }
 }
