@@ -24,3 +24,20 @@ exports.assertPromise = (promise) => {
     }
   }
 }
+
+exports.testPromise = (testName, testMethod) => {
+  test(testName, (done) => {
+    let testResult = testMethod(done)
+
+    if (Promise.resolve(testResult) === testResult) {
+      testResult.then(done).catch(done)
+    } else {
+      done(new Error('No promise to assert'))
+    }
+  })
+}
+
+exports.promise = {
+  test: exports.testPromise,
+  assert: exports.assertPromise
+}

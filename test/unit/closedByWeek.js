@@ -1,32 +1,29 @@
 const { deepEqual } = require('assert')
-const { assertPromise } = require('../utils')
+const { promise } = require('../utils')
 
 test('ClosedByWeek', () => {
-  test('returns empty array if no cards present', (done) => {
+  promise.test('returns empty array if no cards present', () => {
     let fakeCardsFor = () => Promise.resolve([])
     let closedByWeek = ClosedByWeek(fakeCardsFor)
 
-    assertPromise(closedByWeek.get('boardId'))
+    return promise.assert(closedByWeek.get('boardId'))
     .resolves((cards) => deepEqual(cards, []))
-    .then(done).catch(done)
   })
 
-  test('returns empty array if no card is closed', (done) => {
+  promise.test('returns empty array if no card is closed', () => {
     let fakeCardsFor = () => Promise.resolve([card(1)])
     let closedByWeek = ClosedByWeek(fakeCardsFor)
 
-    assertPromise(closedByWeek.get('boardId'))
+    return promise.assert(closedByWeek.get('boardId'))
     .resolves((cards) => deepEqual(cards, []))
-    .then(done).catch(done)
   })
 
-  test('rejects with an error when cannot reach api', (done) => {
+  promise.test('rejects with an error when cannot reach api', () => {
     let fakeCardsFor = () => Promise.reject(new Error('404 not found'))
     let closedByWeek = ClosedByWeek(fakeCardsFor)
 
-    assertPromise(closedByWeek.get('boardId'))
+    return promise.assert(closedByWeek.get('boardId'))
     .rejects((err) => deepEqual(err.message, '404 not found'))
-    .then(done).catch(done)
   })
 })
 
