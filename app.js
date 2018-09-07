@@ -5,4 +5,5 @@ const { closedByWeek } = require('./lib/rules/closedByWeek')
 const boardId = configuration().boardId
 
 cardsFor(boardId)
-.then((cards) => console.log(closedByWeek(cards)))
+.then(closedByWeek)
+.then(console.log)
