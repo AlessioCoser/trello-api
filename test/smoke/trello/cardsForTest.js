@@ -1,10 +1,10 @@
 const { equal, notEqual } = require('assert')
-const { cardsFor } = require('../../../lib/trello/cardsFor')
-const { TrelloConfig } = require('../../../lib/trello/config')
+const { cardsFor } = require('../../../lib/trello')
+const { config } = require('../../../lib/trello')
 
 test('trello', () => {
   test('#cardsFor', () => {
-    let boardId = TrelloConfig().boardId
+    let boardId = config().boardId
 
     test('returns all cards of a given board', (done) => {
       cardsFor(boardId)

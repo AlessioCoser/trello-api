@@ -1,5 +1,5 @@
 const { equal, notEqual } = require('assert')
-const { myBoards } = require('../../../lib/trello/myBoards')
+const { myBoards } = require('../../../lib/trello')
 
 test('trello', () => {
   test('#myBoards', () => {
