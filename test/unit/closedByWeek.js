@@ -3,7 +3,7 @@ const { assertPromise } = require('../utils')
 
 test('ClosedByWeek', () => {
   test('returns empty array if no cards present', (done) => {
-    let fakeCardsFor = promiseWillResolve([])
+    let fakeCardsFor = () => Promise.resolve([])
     let closedByWeek = ClosedByWeek(fakeCardsFor)
 
     assertPromise(closedByWeek.get('boardId'))
@@ -12,7 +12,7 @@ test('ClosedByWeek', () => {
   })
 
   test('returns empty array if no card is closed', (done) => {
-    let fakeCardsFor = promiseWillResolve([card(1)])
+    let fakeCardsFor = () => Promise.resolve([card(1)])
     let closedByWeek = ClosedByWeek(fakeCardsFor)
 
     assertPromise(closedByWeek.get('boardId'))
@@ -21,7 +21,7 @@ test('ClosedByWeek', () => {
   })
 
   test('rejects with an error when call to trello is broken', (done) => {
-    let fakeCardsFor = promiserejects(new Error('404 not found'))
+    let fakeCardsFor = () => Promise.reject(new Error('404 not found'))
     let closedByWeek = ClosedByWeek(fakeCardsFor)
 
     assertPromise(closedByWeek.get('boardId'))
@@ -31,8 +31,6 @@ test('ClosedByWeek', () => {
 })
 
 const card = (id) => ({ id: `${id}`, name: 'first', actions: [] })
-const promiseWillResolve = (arg) => () => Promise.resolve(arg)
-const promiserejects = (err) => () => Promise.reject(err)
 
 const ClosedByWeek = (cardsFor) => {
   return {
