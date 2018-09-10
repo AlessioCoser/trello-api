@@ -1,13 +1,14 @@
 const { deepEqual } = require('assert')
 const { closedByWeek } = require('../../lib/rules/closedByWeek')
+const FAKE_CONFIG = { lists: { doing: 'A_DOING_LIST', done: 'A_DONE_LIST' } }
 
 test('closedByWeek', () => {
   test('returns empty array if no cards present', () => {
-    deepEqual(closedByWeek([]), [])
+    deepEqual(closedByWeek([], FAKE_CONFIG), [])
   })
 
   test('returns empty array if no card is closed', () => {
-    deepEqual(closedByWeek([card(1)]), [])
+    deepEqual(closedByWeek([card(1)], FAKE_CONFIG), [])
   })
 
   test('returns cards closed grouped by week', () => {
@@ -22,7 +23,7 @@ test('closedByWeek', () => {
       cardClosedOn(12, MONDAY_WEEK_ONE),
       cardClosedOn(21, MONDAY_WEEK_TWO),
       cardClosedOn(13, FRIDAY_WEEK_ONE)
-    ])
+    ], FAKE_CONFIG)
 
     deepEqual(Object.keys(closed), ['2018-09-03', '2018-09-10'])
     deepEqual(closed['2018-09-03'].map((card) => card.id), [11, 12, 13])
@@ -36,6 +37,6 @@ const card = (id) => ({ id: `${id}`, name: 'first', actions: [] })
 
 const cardClosedOn = (id, closingDate) => {
   let c = card(id)
-  c.actions = [action('DOING', 'DONE', closingDate)]
+  c.actions = [action(FAKE_CONFIG.lists.doing, FAKE_CONFIG.lists.done, closingDate)]
   return c
 }
